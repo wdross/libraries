@@ -1,0 +1,21 @@
+CAN_BUS_Shield/
+
+# standard libraries included in IDE 1.6.12 install:
+WiFi
+Temboo
+SpacebrewYun
+Stepper
+TFT
+SD
+Servo
+Robot_Motor
+Robot_Control
+Keyboard
+LiquidCrystal
+Mouse
+RobotIRremote
+Firmata
+GSM
+Esplora
+Ethernet
+Bridge

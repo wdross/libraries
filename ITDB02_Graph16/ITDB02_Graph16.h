@@ -66,7 +66,7 @@
 #define ASPECT_4x3	0
 #define ASPECT_16x9	1
 
-#include "WProgram.h"
+#include "Arduino.h"
 
 struct _current_font
 {

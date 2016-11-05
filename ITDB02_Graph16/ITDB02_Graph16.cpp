@@ -52,7 +52,7 @@
   (*) Initial release is v2.0 to keep it in sync with the 8bit library.
 */
 
-#include "WProgram.h"
+#include "Arduino.h"
 #include "ITDB02_Graph16.h"
 #include <avr/pgmspace.h>
 #include <pins_arduino.h>
@@ -146,25 +146,24 @@ void ITDB02::InitLCD(byte orientation)
 
 	if (disp_y_size==319)
 	{
-		
 		*P_CS &= ~B_CS;
-		main_W_com_data(0x0000,0x0001);    delay(1);  //打开晶振
+		main_W_com_data(0x0000,0x0001);    delay(1);  //Turn on the crystal
     main_W_com_data(0x0003,0xA8A4);    delay(1);   //0xA8A4
     main_W_com_data(0x000C,0x0000);    delay(1);   
     main_W_com_data(0x000D,0x080C);    delay(1);   
     main_W_com_data(0x000E,0x2B00);    delay(1);   
     main_W_com_data(0x001E,0x00B7);    delay(1);   
-    main_W_com_data(0x0001,0x2B3F);    delay(1);   //驱动输出控制320*240  0x6B3F
+    main_W_com_data(0x0001,0x2B3F);    delay(1);   //Drive output control: 320*240  0x6B3F
     main_W_com_data(0x0002,0x0600);    delay(1);
     main_W_com_data(0x0010,0x0000);    delay(1);
-    main_W_com_data(0x0011,0x6070);    delay(1);        //0x4030           //定义数据格式  16位色 
+    main_W_com_data(0x0011,0x6070);    delay(1);        //0x4030           //Defines the data format  16 bit color
     main_W_com_data(0x0005,0x0000);    delay(1);
     main_W_com_data(0x0006,0x0000);    delay(1);
     main_W_com_data(0x0016,0xEF1C);    delay(1);
     main_W_com_data(0x0017,0x0003);    delay(1);
     main_W_com_data(0x0007,0x0233);    delay(1);        //0x0233       
     main_W_com_data(0x000B,0x0000);    delay(1);
-    main_W_com_data(0x000F,0x0000);    delay(1);        //扫描开始地址
+    main_W_com_data(0x000F,0x0000);    delay(1);        //Scan start address
     main_W_com_data(0x0041,0x0000);    delay(1);
     main_W_com_data(0x0042,0x0000);    delay(1);
     main_W_com_data(0x0048,0x0000);    delay(1);
@@ -187,75 +186,10 @@ void ITDB02::InitLCD(byte orientation)
     main_W_com_data(0x0023,0x0000);    delay(1);
     main_W_com_data(0x0024,0x0000);    delay(1);
     main_W_com_data(0x0025,0x8000);    delay(1);
-    main_W_com_data(0x004f,0);        //行首址0
-    main_W_com_data(0x004e,0);        //列首址0
+    main_W_com_data(0x004f,0);        //The first row of 0
+    main_W_com_data(0x004e,0);        //The first column address is 0
     LCD_Write_COM(0x22);	
     *P_CS |= B_CS;
-    
-    /*
-    *P_CS &= ~B_CS;
-	  main_W_com_data(0x0001, 0x0100); // set SS and SM bit
-		main_W_com_data(0x0002, 0x0200); // set 1 line inversion
-		main_W_com_data(0x0003, 0x1030); // set GRAM write direction and BGR=1.
-		main_W_com_data(0x0004, 0x0000); // Resize register
-		main_W_com_data(0x0008, 0x0207); // set the back porch and front porch
-		main_W_com_data(0x0009, 0x0000); // set non-display area refresh cycle ISC[3:0]
-		main_W_com_data(0x000A, 0x0000); // FMARK function
-		main_W_com_data(0x000C, 0x0000); // RGB interface setting
-		main_W_com_data(0x000D, 0x0000); // Frame marker Position
-		main_W_com_data(0x000F, 0x0000); // RGB interface polarity
-		//Power On sequence //
-		main_W_com_data(0x0010, 0x0000); // SAP, BT[3:0], AP, DSTB, SLP, STB
-		main_W_com_data(0x0011, 0x0007); // DC1[2:0], DC0[2:0], VC[2:0]
-		main_W_com_data(0x0012, 0x0000); // VREG1OUT voltage
-		main_W_com_data(0x0013, 0x0000); // VDV[4:0] for VCOM amplitude
-		main_W_com_data(0x0007, 0x0001);
-		delay(200); // Dis-charge capacitor power voltage
-		main_W_com_data(0x0010, 0x1690); // SAP, BT[3:0], AP, DSTB, SLP, STB
-		main_W_com_data(0x0011, 0x0227); // Set DC1[2:0], DC0[2:0], VC[2:0]
-		delay(50); // Delay 50ms
-		main_W_com_data(0x0012, 0x000D); // 0012
-		delay(50); // Delay 50ms
-		main_W_com_data(0x0013, 0x1200); // VDV[4:0] for VCOM amplitude
-		main_W_com_data(0x0029, 0x000A); // 04  VCM[5:0] for VCOMH
-		main_W_com_data(0x002B, 0x000D); // Set Frame Rate
-		delay(50); // Delay 50ms
-		main_W_com_data(0x0020, 0x0000); // GRAM horizontal Address
-		main_W_com_data(0x0021, 0x0000); // GRAM Vertical Address
-		// ----------- Adjust the Gamma Curve ----------//
-		main_W_com_data(0x0030, 0x0000);
-		main_W_com_data(0x0031, 0x0404);
-		main_W_com_data(0x0032, 0x0003);
-		main_W_com_data(0x0035, 0x0405);
-		main_W_com_data(0x0036, 0x0808);
-		main_W_com_data(0x0037, 0x0407);
-		main_W_com_data(0x0038, 0x0303);
-		main_W_com_data(0x0039, 0x0707);
-		main_W_com_data(0x003C, 0x0504);
-		main_W_com_data(0x003D, 0x0808);
-		//------------------ Set GRAM area ---------------//
-		main_W_com_data(0x0050, 0x0000); // Horizontal GRAM Start Address
-		main_W_com_data(0x0051, 0x00EF); // Horizontal GRAM End Address
-		main_W_com_data(0x0052, 0x0000); // Vertical GRAM Start Address
-		main_W_com_data(0x0053, 0x013F); // Vertical GRAM Start Address
-		main_W_com_data(0x0060, 0xA700); // Gate Scan Line
-		main_W_com_data(0x0061, 0x0001); // NDL,VLE, REV
-	 
-		main_W_com_data(0x006A, 0x0000); // set scrolling line
-		//-------------- Partial Display Control ---------//
-		main_W_com_data(0x0080, 0x0000);
-		main_W_com_data(0x0081, 0x0000);
-		main_W_com_data(0x0082, 0x0000);
-		main_W_com_data(0x0083, 0x0000);
-		main_W_com_data(0x0084, 0x0000);
-		main_W_com_data(0x0085, 0x0000);
-		//-------------- Panel Control -------------------//
-		main_W_com_data(0x0090, 0x0010);
-		main_W_com_data(0x0092, 0x0000);
-		main_W_com_data(0x0007, 0x0133); // 262K color and display ON
-	  *P_CS |= B_CS;
-	  */
-  
 	}
 	else
 	{
