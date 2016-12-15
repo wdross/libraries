@@ -51,7 +51,7 @@ class CFwTimer
   void SetTimer(
     long lTimeout);
 
-  inline long getStartTime();
+  inline long getEndTime();
 
   private:
 
@@ -59,7 +59,7 @@ class CFwTimer
   long m_lTimerPeriod;
 };
 
-inline long CFwTimer::getStartTime() {
+inline long CFwTimer::getEndTime() {
   return m_lStart+m_lTimerPeriod;
 }
 

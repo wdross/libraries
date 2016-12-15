@@ -71,7 +71,7 @@ long CFwTimer::GetElapsed(void)
 long CFwTimer::GetExpiredBy(void)
 {
   if(m_lTimerPeriod == INFINITE)
-      return(-INFINITE);  // special handling
+      return(INFINITE);  // special handling
   long lDelta = GetSystemTime() - (m_lStart + m_lTimerPeriod);
   return (lDelta);
 }
