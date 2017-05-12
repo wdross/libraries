@@ -2,7 +2,7 @@
 //:Description
 //
 // The Class Framework Timer is a support base class for classes that measure elapsed time
-// or simple timing support. Its static method needs the system's time in milliseconds.
+// or simple timing support. Its static method GetSystemTime() needs the system's time in milliseconds.
 //
 //:---------------------------------------------------------------------------
 
@@ -111,8 +111,17 @@ long CFwTimer::GetRemaining(void)
 //
 // Get system time in milliseconds since system boot.
 // We'll use the Arduino's included millis() function, which is actually
-// an UNSIGNED LONG.  We'll use it here as SIGNED LONG, which allows for handling
-// clock wrap correctly.
+// an UNSIGNED LONG (32 bits).  We'll use it here as SIGNED LONG, which allows
+// for handling clock wrap correctly.  The 32-bit signed usage allows for 2^31
+// milliseconds of time to be measured (2147483647 milliseconds, or 24.85 days).
+// Be aware that if your application is constantly checking an expired timer,
+// after it is expired by half the measurable time (12.42 days), it is possible
+// the timer could be considered 'active' again (it would wrap and become positive).
+//
+// The Arduino library also has a micros() function available, but is also
+// an Unsigned Long (32 bits), which would then limit the elapsable time to
+// 2147483647 *microseconds*, or 35.79 minutes.  Depending upon the projects
+// requirements, either could be used.
 //
 long CFwTimer::GetSystemTime() {
   return(millis());
