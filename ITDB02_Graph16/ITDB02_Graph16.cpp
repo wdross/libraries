@@ -60,6 +60,8 @@
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 
+#define HEIGHT 239
+
 ITDB02::ITDB02()
 {
 }
@@ -484,9 +486,9 @@ void ITDB02::drawCircle(int x, int y, int radius)
 	}
 	*P_CS |= B_CS;
 	if (orient==PORTRAIT)
-		setXY(0,0,239,disp_y_size);
+		setXY(0,0,HEIGHT,disp_y_size);
 	else
-		setXY(0,0,disp_y_size,239);
+		setXY(0,0,disp_y_size,HEIGHT);
 }
 
 void ITDB02::fillCircle(int x, int y, int radius)
@@ -501,9 +503,9 @@ void ITDB02::fillCircle(int x, int y, int radius)
 			}
 	*P_CS |= B_CS;
 	if (orient==PORTRAIT)
-		setXY(0,0,239,disp_y_size);
+		setXY(0,0,HEIGHT,disp_y_size);
 	else
-		setXY(0,0,disp_y_size,239);
+		setXY(0,0,disp_y_size,HEIGHT);
 }
 
 void ITDB02::clrScr()
@@ -512,11 +514,11 @@ void ITDB02::clrScr()
 	
 	*P_CS &= ~B_CS;
 	if (orient==PORTRAIT)
-		setXY(0,0,239,disp_y_size);
+		setXY(0,0,HEIGHT,disp_y_size);
 	else
-		setXY(0,0,disp_y_size,239);
+		setXY(0,0,disp_y_size,HEIGHT);
 	*P_RS |= B_RS;
-	for (i=0; i<(240*(disp_y_size+1)); i++)
+	for (i=0; i<((HEIGHT+1)*(disp_y_size+1)); i++)
 	{
 		LCD_Writ_Bus(0,0);
 	}
@@ -533,11 +535,11 @@ void ITDB02::fillScr(byte r, byte g, byte b)
 
 	*P_CS &= ~B_CS;
 	if (orient==PORTRAIT)
-		setXY(0,0,239,disp_y_size);
+		setXY(0,0,HEIGHT,disp_y_size);
 	else
-		setXY(0,0,disp_y_size,239);
+		setXY(0,0,disp_y_size,HEIGHT);
 	*P_RS |= B_RS;
-	for (i=0; i<(240*(disp_y_size+1)); i++)
+	for (i=0; i<((HEIGHT+1)*(disp_y_size+1)); i++)
 	{
 		LCD_Writ_Bus(ch,cl);
 	}
@@ -570,9 +572,9 @@ void ITDB02::drawPixel(int x, int y)
 	setPixel(fcolorr, fcolorg, fcolorb);
 	*P_CS |= B_CS;
 	if (orient==PORTRAIT)
-		setXY(0,0,239,disp_y_size);
+		setXY(0,0,HEIGHT,disp_y_size);
 	else
-		setXY(0,0,disp_y_size,239);
+		setXY(0,0,disp_y_size,HEIGHT);
 }
 
 void ITDB02::drawLine(int x1, int y1, int x2, int y2)
@@ -676,9 +678,9 @@ void ITDB02::drawLine(int x1, int y1, int x2, int y2)
 	}
 
 	if (orient==PORTRAIT)
-		setXY(0,0,239,disp_y_size);
+		setXY(0,0,HEIGHT,disp_y_size);
 	else
-		setXY(0,0,disp_y_size,239);
+		setXY(0,0,disp_y_size,HEIGHT);
 }
 
 void ITDB02::drawHLine(int x, int y, int l)
@@ -817,9 +819,9 @@ void ITDB02::print(char *st, int x, int y, int deg)
 	if (orient==PORTRAIT)
 	{
 	if (x==RIGHT)
-		x=240-(stl*cfont.x_size);
+		x=(HEIGHT+1)-(stl*cfont.x_size);
 	if (x==CENTER)
-		x=(240-(stl*cfont.x_size))/2;
+		x=((HEIGHT+1)-(stl*cfont.x_size))/2;
 	}
 	else
 	{
@@ -1054,4 +1056,8 @@ void ITDB02::drawBitmap(int x, int y, int sx, int sy, unsigned int* data, int de
 			}
 		*P_CS |= B_CS;
 	}
+}
+
+long ITDB02::getXSize() {
+  return HEIGHT;
 }

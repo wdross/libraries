@@ -66,6 +66,14 @@
 #define ASPECT_4x3	0
 #define ASPECT_16x9	1
 
+// defines to be used as parameters to fillScr(),setColor(),setBackColor() calls:
+#define BLACK 0,0,0
+#define WHITE 255,255,255
+#define RED 255,0,0
+#define GREEN 0,255,0
+#define BLUE 0,0,255
+#define YELLOW 255,255,0
+
 #include "Arduino.h"
 
 struct _current_font
@@ -101,6 +109,10 @@ class ITDB02
 		void setFont(uint8_t* font);
 		void drawBitmap(int x, int y, int sx, int sy, unsigned int* data, int scale=1);
 		void drawBitmap(int x, int y, int sx, int sy, unsigned int* data, int deg, int rox, int roy);
+		inline long getYSize();
+		long getXSize();
+		inline char getFontWidth();
+		inline char getFontHeight();
 
 	protected:
 		byte fcolorr,fcolorg,fcolorb;
@@ -122,5 +134,17 @@ class ITDB02
 		void setXY(word x1, word y1, word x2, word y2);
 		void rotateChar(byte c, int x, int y, int pos, int deg);
 };
+
+inline long ITDB02::getYSize() {
+  return disp_y_size;
+}
+
+inline char ITDB02::getFontWidth() {
+  return cfont.x_size;
+}
+
+inline char ITDB02::getFontHeight() {
+  return cfont.y_size;
+}
 
 #endif
