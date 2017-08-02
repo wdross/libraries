@@ -9,6 +9,25 @@ support found at https://github.com/Seeed-Studio/CAN_BUS_Shield
 
 # library list
 
+## WiiChuck
+Source from https://playground.arduino.cc/Main/WiiChuckClass
+
+## CFwDebouncedDigitalInput
+An object that can be associated with an input and contains a CFwTimer object to debounce
+the current state of the input (available via GetState() method).
+
+## CFwTimer
+A timer object that can be used to measure an elapsed time over 12 days with ms resolution.
+
+## Encoder
+Sourced from https://github.com/PaulStoffregen/Encoder without any changes.
+
+## FlexiTimer
+Sourced from https://github.com/dvarrazzo/arduino without any changes.
+This library allows setting up what amounts to a hardware timer interrupt at a sub-millisecond
+callback interval.  I was able to use this with the CAN_BUS_Shield callback routine to work
+around the otherwise conflicting hardware callback lines of the Seeed-Studio shield and a SainSmart LCD.
+
 ## CAN_BUS_Shield:
 Forked from https://github.com/Seeed-Studio/CAN_BUS_Shield and has accepted at least one documentation
 update I submitted.  It's not actually in this repository, as my fork lives at https://github.com/wdross/CAN_BUS_Shield.
