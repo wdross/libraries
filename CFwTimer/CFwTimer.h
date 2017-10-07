@@ -42,6 +42,8 @@ class CFwTimer
   void IncrementTimer(
     long lPeriod);          // timer period to add to last set time
 
+  void IncrementTimerUnlessWayBehind(long lPeriod);
+
   bool IsTimeout(void);
 
   bool IsTiming(void);

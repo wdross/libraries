@@ -165,6 +165,30 @@ void CFwTimer::IncrementTimer(
   }
 }
 
+// +-----------------------------------+
+// |  IncrementTimerUnlessWayBehind()  |
+// +-----------------------------------+
+
+//:Description
+//
+// Increments previous timeout period by the new period, unless we
+// see the timer is significantly behind (if more than 2/3 of the incrementing
+// Period has already elapsed)
+//
+// This supports the concept of maintaining a fixed interval, but also
+// can handle a huge step function (where perhaps the timer hasn't been
+// serviced in a timely fashion lately)
+//
+// returns void
+//
+void CFwTimer::IncrementTimerUnlessWayBehind(long lPeriod)
+{
+  if (lPeriod < INFINITE/2 && GetExpiredBy() > (lPeriod*2)/3)
+    SetTimer(lPeriod); // jump to it
+  else
+    IncrementTimer(lPeriod);
+}
+
 // +---------------+
 // |  IsTimeout()  |
 // +---------------+
