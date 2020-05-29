@@ -48,9 +48,9 @@ CFwTimer::CFwTimer(
 
 //:Description
 //
-// Get the elasped time since timer set.
+// Get the elapsed time since timer set.
 //
-// Returns elasped time in ms
+// Returns elapsed time in ms
 //
 long CFwTimer::GetElapsed(void)
 {
@@ -85,7 +85,7 @@ long CFwTimer::GetExpiredBy(void)
 // Get the remaining time in timeout period.
 //
 // If the period is set to INFINITE then returns INFINITE.
-// If the timer is beyound the timeout period returns 0.
+// If the timer is beyond the timeout period returns 0.
 //
 // NOTE: This routine uses the fact that twos complement subtraction will always
 // yield a signed value that is the difference of the two values. This type of
@@ -195,7 +195,7 @@ void CFwTimer::IncrementTimerUnlessWayBehind(long lPeriod)
 
 //:Description
 //
-// Check if timeout has occured
+// Check if timeout has occurred
 //
 // returns true if timeout, else false if still timing
 //
@@ -257,7 +257,7 @@ void CFwTimer::SetTimer(
   long lTimeout)
 {
   m_lStart = GetSystemTime();
-  m_lTimerPeriod = lTimeout;
+  m_lTimerPeriod = lTimeout>0?lTimeout:0;
 }
 
 //:Special
